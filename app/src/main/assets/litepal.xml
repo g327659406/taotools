@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="databases" />
+    <version value="1" />
+    <list>
+        <mapping class="com.dejin.tool.bean.Project" />
+        <mapping class="com.dejin.tool.bean.Urls" />
+    </list>
+    <storage value="external" />
+
+</litepal>

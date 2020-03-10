@@ -1,29 +1,23 @@
-package com.dejin.urltest.adapter;
+package com.dejin.tool.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
-
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dejin.urltest.R;
-import com.dejin.urltest.bean.Urls;
+import com.dejin.tool.R;
+import com.dejin.tool.bean.Urls;
 
 import java.util.List;
 
 
 /**
- * @author 谷超
  * 专业分类适配器
  */
 public class UrlsAdapter extends RecyclerView.Adapter<UrlsAdapter.MyViewHolder> {
@@ -45,12 +39,9 @@ public class UrlsAdapter extends RecyclerView.Adapter<UrlsAdapter.MyViewHolder> 
         holder.tv_url.setText(urls.url);
         holder.progressBar.setVisibility(urls.isRunning ? View.VISIBLE : View.INVISIBLE);
         holder.cb_status.setVisibility(urls.isAvaliable ? View.VISIBLE : View.INVISIBLE);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(position);
-                }
+        holder.itemView.setOnClickListener(view -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(position);
             }
         });
     }
@@ -70,7 +61,6 @@ public class UrlsAdapter extends RecyclerView.Adapter<UrlsAdapter.MyViewHolder> 
     public static interface OnItemClickListener {
         void onItemClick(int i);
     }
-
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_url;

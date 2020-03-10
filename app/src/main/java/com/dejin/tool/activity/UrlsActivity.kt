@@ -1,15 +1,17 @@
-package com.dejin.urltest.activity
+package com.dejin.tool.activity
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dejin.urltest.R
-import com.dejin.urltest.adapter.UrlsAdapter
-import com.dejin.urltest.aes.EncodeUtils
-import com.dejin.urltest.aes.Md5Utils
-import com.dejin.urltest.bean.Urls
-import kotlinx.android.synthetic.main.activity_main.*
+import com.dejin.tool.R
+import com.dejin.tool.adapter.UrlsAdapter
+import com.dejin.tool.aes.EncodeUtils
+import com.dejin.tool.aes.Md5Utils
+import com.dejin.tool.bean.Project
+import com.dejin.tool.bean.Urls
+import kotlinx.android.synthetic.main.activity_test_url.*
+import kotlinx.android.synthetic.main.layout_title.*
 import okhttp3.*
 import org.json.JSONArray
 import org.litepal.util.cipher.AESCrypt
@@ -19,17 +21,22 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-class UrlsActivity : AppCompatActivity() {
-    var key = "U2FsdGVkX19X5NAwZN8I2oWsRPaYGJPy"
+class UrlsActivity : BaseActivity() {
+
     private val okHttpClient = OkHttpClient()
     private val list = arrayListOf<Urls>()
     private lateinit var adapter: UrlsAdapter
-    val fixedThreadPool: ExecutorService = Executors.newFixedThreadPool(5)
-
+    private val fixedThreadPool: ExecutorService = Executors.newFixedThreadPool(8)
+    private lateinit var project: Project
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_test_url)
+        project = intent.getSerializableExtra("data") as Project
+        tv_title.text = project.projectName + " — 域名测试"
+        tv_right.visibility = View.VISIBLE
+        tv_right.text = "重试"
+
         adapter = UrlsAdapter(this, list)
         listView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         listView.adapter = adapter
@@ -46,10 +53,15 @@ class UrlsActivity : AppCompatActivity() {
             }
         }
         startTest()
+        tv_right.setOnClickListener {
+            list.clear()
+            adapter.notifyDataSetChanged()
+            startTest()
+        }
 
     }
 
-    fun startTest() {
+    private fun startTest() {
         progress.visibility = View.VISIBLE
         listView.visibility = View.INVISIBLE
         getBaseUrls(successCallback = {
@@ -78,13 +90,14 @@ class UrlsActivity : AppCompatActivity() {
         })
     }
 
-    fun notifyDataSetChanged() {
+    private fun notifyDataSetChanged() {
         runOnUiThread {
             adapter.notifyDataSetChanged()
         }
     }
 
-    fun startTestUrl(pUrl: String): Boolean {
+    private fun startTestUrl(pUrl: String): Boolean {
+        println("开始测试$pUrl")
         val params = mutableMapOf<String, String>()
         params.put("typenum", "102")
         params.put("mod", "version")
@@ -98,7 +111,7 @@ class UrlsActivity : AppCompatActivity() {
                 sign += ("$k=$value")
             }
         }
-        sign += ("secret=$key")
+        sign += ("secret=${project.signKey}")
         sign = Md5Utils.MD5Encode(sign, "UTF-8", false)
         url += "sign=$sign"
         val request = Request.Builder().get().url(url).build()
@@ -107,7 +120,7 @@ class UrlsActivity : AppCompatActivity() {
             response = okHttpClient.newCall(request).execute()
             return true
         } catch (e: Exception) {
-
+            e.printStackTrace()
         } finally {
             response?.close()
         }
@@ -118,8 +131,7 @@ class UrlsActivity : AppCompatActivity() {
 
     /**获取所有备用的url列表*/
     fun getBaseUrls(successCallback: (JSONArray) -> Unit = {}, completeCallback: () -> Unit = {}) {
-//        okHttpClient.newCall(Request.Builder().get().url("https://domainlistname.oss-accelerate.aliyuncs.com").build())//老域名
-        okHttpClient.newCall(Request.Builder().get().url("https://qianduo.oss-accelerate.aliyuncs.com").build())//新域名
+        okHttpClient.newCall(Request.Builder().get().url(project.urls).build())//新域名
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     completeCallback()
@@ -127,10 +139,8 @@ class UrlsActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call, response: Response) {
                     completeCallback()
-                    val result = AESCrypt.decrypt(key, response?.body?.string())
+                    val result = AESCrypt.decrypt(project.signKey, response?.body?.string())
                     successCallback(JSONArray(result))
-
-
                 }
 
             })

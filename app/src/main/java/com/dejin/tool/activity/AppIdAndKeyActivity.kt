@@ -1,4 +1,4 @@
-package com.dejin.urltest.activity
+package com.dejin.tool.activity
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.dejin.urltest.R
+import com.dejin.tool.R
 import kotlinx.android.synthetic.main.activity_app_id_and_key.*
 import org.json.JSONObject
 import org.litepal.util.cipher.AESCrypt

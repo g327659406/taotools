@@ -1,4 +1,4 @@
-package com.dejin.urltest.aes;
+package com.dejin.tool.aes;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

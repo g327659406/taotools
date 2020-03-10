@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.HomeActivity">
-
+    tools:context=".activity.AppChooseActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,25 +13,9 @@
 
         <include layout="@layout/layout_title" />
 
-        <Button
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="startTestUrl"
-            android:text="测试域名" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="createUrlsEncode"
-            android:text="生成加密域名组" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="createWithAppIDAndKey"
-            android:text="生成加密APPID和KEY" />
-
-
+            android:layout_height="match_parent" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

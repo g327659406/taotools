@@ -11,31 +11,38 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_urls"
+        <include layout="@layout/layout_title" />
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="10"
-            android:minLines="5" />
+            android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="startEncode"
-            android:text="开始编码" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <EditText
-            android:id="@+id/et_encode_urls"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="10"
-            android:minLines="5" />
+            <LinearLayout
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="startDecode"
-            android:text="开始解码" />
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="获取域名列表中..." />
+            </LinearLayout>
+        </RelativeLayout>
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
