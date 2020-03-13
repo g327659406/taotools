@@ -13,7 +13,7 @@ import org.json.JSONObject
 import org.litepal.util.cipher.AESCrypt
 
 
-class AppIdAndKeyActivity : AppCompatActivity() {
+class AppIdAndKeyActivity : BaseActivity() {
     companion object {
         private val AESKEY = "U2FsdGVkX19X5NAwZN8I2oWsRPaYGJPy"
         private val PRIVATE_KEY =

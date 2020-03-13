@@ -2,7 +2,9 @@ package com.dejin.tool.app
 
 import android.app.Application
 import android.content.Context
+import android.graphics.Color
 import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.dejin.tool.bean.Project
 import com.dejin.tool.bean.Urls
@@ -24,6 +26,8 @@ class AppContext : Application() {
 
     private fun initConfig() {
         Utils.init(this)
+        ToastUtils.setMsgColor(Color.WHITE)
+        ToastUtils.setBgColor(Color.parseColor("#606060"))
         LitePal.initialize(this)
         if (LitePal.isExist(Project::class.java).not()) {
             val array = JSONArray(ConvertUtils.inputStream2String(assets.open("config"), "UTF8"))

@@ -8,4 +8,6 @@ class Project : LitePalSupport(), Serializable {
     var projectName = ""
     var signKey = ""
     var urls = ""
+    var appId = ""
+    var privateKey = ""
 }

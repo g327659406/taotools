@@ -6,12 +6,12 @@ import android.view.KeyEvent
 import com.dejin.tool.R
 import kotlinx.android.synthetic.main.dialog_add_url.*
 
-class AddUrlsDialog constructor(activity: Activity) : BaseDialog(activity) {
+class AddProjectsDialog constructor(activity: Activity) : BaseDialog(activity) {
     private var isForce: Boolean = false
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?) {
-        setContentView(R.layout.dialog_add_url)
+        setContentView(R.layout.dialog_add_project)
         tv_cancel.setOnClickListener { dismiss() }
         setCanceledOnTouchOutside(false)
         setOnKeyListener { _, keyCode, event ->

@@ -44,11 +44,27 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.MyViewHo
                 onItemClickListener.onItemClick(position);
             }
         });
+        holder.itemView.setOnLongClickListener(v -> {
+            if (onItemLongClickListener != null) {
+                onItemLongClickListener.onItemLongClick(position);
+            }
+            return true;
+        });
     }
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    private OnItemLongClickListener onItemLongClickListener;
+
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    public static interface OnItemLongClickListener {
+        void onItemLongClick(int i);
     }
 
 

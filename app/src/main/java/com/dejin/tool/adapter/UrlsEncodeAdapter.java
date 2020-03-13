@@ -47,31 +47,34 @@ public class UrlsEncodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 if (onItemLongClickListener != null) {
                     onItemLongClickListener.onItemLongClick(position);
                 }
+
                 return false;
             });
-        } else {
-            AddViewHolder myViewHolder = (AddViewHolder) holder;
-            myViewHolder.itemView.setOnClickListener(view -> {
-                if (onAddClickListener != null) {
-                    onAddClickListener.onAddClick();
-                }
-            });
         }
+//        else {
+//            MyViewHolder myViewHolder = (MyViewHolder) holder;
+//            myViewHolder.itemView.setOnClickListener(view -> {
+//                if (onAddClickListener != null) {
+//                    onAddClickListener.onAddClick();
+//                }
+//            });
+//        }
 
     }
 
     @Override
     public int getItemCount() {
-        return data.size() + 1;
+        return data.size() ;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == data.size()) {
-            return 1;
-        } else {
-            return 0;
-        }
+//        if (position == data.size()) {
+//            return 1;
+//        } else {
+//            return 0;
+//        }
+        return 0;
     }
 
     private OnItemClickListener onItemClickListener;
@@ -95,15 +98,15 @@ public class UrlsEncodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         void onItemLongClick(int i);
     }
 
-    private OnAddClickListener onAddClickListener;
-
-    public void setOnAddClickListener(OnAddClickListener onAddClickListener) {
-        this.onAddClickListener = onAddClickListener;
-    }
-
-    public static interface OnAddClickListener {
-        void onAddClick();
-    }
+//    private OnAddClickListener onAddClickListener;
+//
+//    public void setOnAddClickListener(OnAddClickListener onAddClickListener) {
+//        this.onAddClickListener = onAddClickListener;
+//    }
+//
+//    public static interface OnAddClickListener {
+//        void onAddClick();
+//    }
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -113,9 +116,9 @@ public class UrlsEncodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_url = (TextView) itemView.findViewById(R.id.tv_url);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
-            cb_status = (CheckBox) itemView.findViewById(R.id.cb_status);
+            tv_url = itemView.findViewById(R.id.tv_url);
+            progressBar = itemView.findViewById(R.id.progressBar);
+            cb_status = itemView.findViewById(R.id.cb_status);
         }
     }
 

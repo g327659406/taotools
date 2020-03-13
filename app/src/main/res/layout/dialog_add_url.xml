@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_dialog_bg"
+    android:background="@android:color/white"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
@@ -24,9 +24,11 @@
         android:layout_margin="10dp"
         android:background="@drawable/shape_input_bg"
         android:gravity="top"
+        android:hint="请输入域名，多个请换行，例如：\nhttps://test1.com\nhttps://test2.com"
         android:maxHeight="300dp"
         android:minLines="4"
-        android:padding="3dp" />
+        android:padding="3dp"
+        android:textSize="14sp" />
 
     <View
         android:layout_width="match_parent"
@@ -43,6 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/selector_button"
             android:gravity="center"
             android:padding="10dp"
             android:text="取消"
@@ -54,6 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/selector_button"
             android:gravity="center"
             android:padding="10dp"
             android:text="确定"
