@@ -37,14 +37,8 @@ class AppContext : Application() {
                 project.projectName = obj.getString("projectName")
                 project.signKey = obj.getString("signKey")
                 project.urls = obj.getString("urls")
+                project.appId = obj.getString("appId")
                 project.save()
-//                val urlArray = obj.getJSONArray("urls")
-//                for (j in 0 until urlArray.length()) {
-//                    val url = Urls()
-//                    url.projectName = project.projectName
-//                    url.url = urlArray.getString(j)
-//                    url.save()
-//                }
 
             }
 

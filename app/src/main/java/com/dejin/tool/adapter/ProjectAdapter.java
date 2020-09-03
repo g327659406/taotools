@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dejin.tool.R;
 import com.dejin.tool.bean.Project;
-import com.dejin.tool.bean.Urls;
 
 import java.util.List;
 
