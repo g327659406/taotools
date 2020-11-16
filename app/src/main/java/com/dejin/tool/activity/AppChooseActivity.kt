@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.dejin.tool.R
 import com.dejin.tool.adapter.ProjectAdapter
-import com.dejin.tool.adapter.UrlsAdapter
 import com.dejin.tool.app.AppContext
 import com.dejin.tool.bean.Project
-import com.dejin.tool.bean.Urls
 import com.dejin.tool.dialog.AddProjectsDialog
 import kotlinx.android.synthetic.main.activity_app_choose.*
 import kotlinx.android.synthetic.main.dialog_add_project.*
@@ -21,7 +18,6 @@ import kotlinx.android.synthetic.main.layout_title.*
 import org.litepal.LitePal
 
 class AppChooseActivity : BaseActivity() {
-
     private lateinit var adapter: ProjectAdapter
     private val list = mutableListOf<Project>()
 
@@ -80,32 +76,31 @@ class AppChooseActivity : BaseActivity() {
         recyclerView.adapter = adapter
         adapter.setOnItemClickListener { i ->
             startActivity(
-                Intent(AppContext.INSTANCE, HomeActivity::class.java).putExtra(
-                    "data",
-                    list[i]
-                )
+                    Intent(AppContext.INSTANCE, HomeActivity::class.java).putExtra(
+                            "data",
+                            list[i]
+                    )
             )
         }
         adapter.setOnItemLongClickListener {
             AlertDialog.Builder(this).setTitle("提示")
-                .setMessage("是否删除该项目？")
-                .setPositiveButton("确定") { dialog, _ ->
-                    val url = list[it]
-                    list.removeAt(it)
-                    adapter.notifyDataSetChanged()
-                    LitePal.deleteAll(
-                        Project::class.java,
-                        "projectName = ?",
-                        url.projectName
-                    )
-                    dialog.dismiss()
+                    .setMessage("是否删除该项目？")
+                    .setPositiveButton("确定") { dialog, _ ->
+                        val url = list[it]
+                        list.removeAt(it)
+                        adapter.notifyDataSetChanged()
+                        LitePal.deleteAll(
+                                Project::class.java,
+                                "projectName = ?",
+                                url.projectName
+                        )
+                        dialog.dismiss()
 
-                }
-                .setNegativeButton("取消") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .setCancelable(false).create().show()
-
+                    }
+                    .setNegativeButton("取消") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setCancelable(false).create().show()
         }
     }
 }
