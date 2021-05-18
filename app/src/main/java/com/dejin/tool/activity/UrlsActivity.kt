@@ -10,6 +10,7 @@ import com.dejin.tool.aes.EncodeUtils
 import com.dejin.tool.aes.Md5Utils
 import com.dejin.tool.bean.Project
 import com.dejin.tool.bean.Urls
+import com.dejin.tool.utils.Util
 import kotlinx.android.synthetic.main.activity_test_url.*
 import kotlinx.android.synthetic.main.layout_title.*
 import okhttp3.*
@@ -46,7 +47,7 @@ class UrlsActivity : BaseActivity() {
                 url.isRunning = true
                 url.isAvaliable = false
                 notifyDataSetChanged()
-                val result = startTestUrl(url.url)
+                val result = Util.startTestUrl(url.url)
                 url.isRunning = false
                 url.isAvaliable = result
                 notifyDataSetChanged()
@@ -76,7 +77,7 @@ class UrlsActivity : BaseActivity() {
                 fixedThreadPool.submit {
                     it.isRunning = true
                     notifyDataSetChanged()
-                    val result = startTestUrl(it.url)
+                    val result = Util.startTestUrl(it.url)
                     it.isRunning = false
                     it.isAvaliable = result
                     notifyDataSetChanged()
@@ -130,21 +131,20 @@ class UrlsActivity : BaseActivity() {
 
 
     /**获取所有备用的url列表*/
-    fun getBaseUrls(successCallback: (JSONArray) -> Unit = {}, completeCallback: () -> Unit = {}) {
+    private fun getBaseUrls(successCallback: (JSONArray) -> Unit = {}, completeCallback: () -> Unit = {}) {
         okHttpClient.newCall(Request.Builder().get().url(project.urls).build())//新域名
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    completeCallback()
-                }
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        completeCallback()
+                    }
 
-                override fun onResponse(call: Call, response: Response) {
-                    completeCallback()
-                    val result = AESCrypt.decrypt(project.signKey, response?.body?.string())
-                    successCallback(JSONArray(result))
-                }
+                    override fun onResponse(call: Call, response: Response) {
+                        completeCallback()
+                        val result = AESCrypt.decrypt(project.signKey, response?.body?.string())
+                        successCallback(JSONArray(result))
+                    }
 
-            })
-
+                })
     }
 
 }

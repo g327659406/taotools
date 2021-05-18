@@ -3,6 +3,7 @@ package com.dejin.tool.activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -95,7 +96,6 @@ class AppChooseActivity : BaseActivity() {
                                 url.projectName
                         )
                         dialog.dismiss()
-
                     }
                     .setNegativeButton("取消") { dialog, _ ->
                         dialog.dismiss()
